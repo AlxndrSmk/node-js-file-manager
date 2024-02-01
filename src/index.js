@@ -1,7 +1,13 @@
 import process from 'process';
+import { cwd, stdin } from 'node:process';
 
 const args = process.argv.slice(2);
 let username;
+
+const showCurrentDirectory = () => console.log(`You are currently in ${cwd()}`);
+const sayGoodbye = () =>
+  console.log(`
+Thank you for using File Manager, ${username}, goodbye!`);
 
 args.map((el) => {
   if (el.startsWith('--')) {
@@ -9,19 +15,20 @@ args.map((el) => {
     console.log(`Welcome to the File Manager, ${username}!`);
   }
 });
+showCurrentDirectory();
 
-process.stdin.on('data', (data) => {
+stdin.on('data', (data) => {
   const input = data.toString().trim();
 
   if (input === '.exit') {
-    console.log(`Thank you for using File Manager, ${username}, goodbye!`);
+    sayGoodbye();
     process.exit();
+  } else {
+    showCurrentDirectory();
   }
 });
 
 process.on('SIGINT', () => {
-  console.log(`
-Thank you for using File Manager, ${username}, goodbye!`);
-
+  sayGoodbye();
   process.exit();
 });
