@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import showPrompt from './src/showPrompt.js';
+import showPrompt from './showPrompt.js';
+import { showCurrentDir } from './index.js';
 
 const listFiles = async (dirPath) => {
   try {
@@ -22,10 +23,11 @@ const listFiles = async (dirPath) => {
         : 'file',
     }));
     console.table(tableData, ['name', 'type']);
+    showCurrentDir();
     showPrompt();
   } catch (error) {
     console.error('Error listing files:', error);
   }
 };
 
-listFiles('/Users/alexander/Music');
+export default listFiles;
