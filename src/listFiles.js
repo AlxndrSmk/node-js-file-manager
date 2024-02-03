@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import showPrompt from './showPrompt.js';
 import { showCurrentDir } from './index.js';
+import errorCodes from './errorCodes.js';
 
 const listFiles = async (dirPath) => {
   try {
@@ -25,8 +26,14 @@ const listFiles = async (dirPath) => {
     console.table(tableData, ['name', 'type']);
     showCurrentDir();
     showPrompt();
-  } catch (error) {
-    console.error('Error listing files:', error);
+  } catch (err) {
+    if (err.code in errorCodes) {
+      console.log(`Error listing files: ${errorCodes[err.code]}.`);
+    } else {
+      console.log(err);
+    }
+    showCurrentDir();
+    showPrompt();
   }
 };
 

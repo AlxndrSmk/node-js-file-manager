@@ -3,10 +3,14 @@ import { stdin } from 'node:process';
 import os from 'os';
 import path from 'path';
 import fs from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 import listFiles from './listFiles.js';
 import showPrompt from './showPrompt.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const args = process.argv.slice(2);
 let username;
 const homeDir = os.homedir();
@@ -36,26 +40,40 @@ const handleExit = () => {
       process.exit();
     } else if (input === 'ls') {
       listFiles(currentDir);
-      // showCurrentDir();
     } else if (input.startsWith('cd')) {
+      const pathToDirectory = input.split(' ')[1];
+      let tempDir;
+
+      if (pathToDirectory.startsWith(homeDir)) {
+        tempDir = pathToDirectory;
+      } else {
+        tempDir = path.join(currentDir, pathToDirectory);
+      }
+
       try {
-        const pathToDirectory = input.split(' ')[1];
-        const testDir = path.join(currentDir, pathToDirectory);
-        if (fs.statSync(testDir).isDirectory()) {
-          currentDir = path.join(currentDir, pathToDirectory);
+        if (fs.statSync(tempDir).isDirectory()) {
+          currentDir = tempDir;
           showCurrentDir();
           showPrompt();
         } else {
           console.log('This is not a directory.');
-          showCurrentDir();
-          showPrompt();
         }
       } catch {
         console.log("Directory doesn't exist.");
-        showCurrentDir();
-        showPrompt();
       }
+
+      showCurrentDir();
+      showPrompt();
+    } else if (input === 'up') {
+      const parentDir = currentDir.split('/').slice(0, -1).join('/');
+      currentDir = parentDir;
+      if (parentDir === homeDir.split('/').slice(0, -1).join('/')) {
+        currentDir = homeDir;
+      }
+      showCurrentDir();
+      showPrompt();
     } else {
+      console.log('Unknown command.');
       showCurrentDir();
       showPrompt();
     }
