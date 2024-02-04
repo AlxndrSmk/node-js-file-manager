@@ -7,6 +7,8 @@ import fs from 'fs';
 import listFiles from './listFiles.js';
 import showPrompt from './showPrompt.js';
 import readFile from './readFile.js';
+import createFile from './createFile.js';
+import renameFile from './renameFile.js';
 
 const args = process.argv.slice(2);
 let username;
@@ -29,7 +31,7 @@ const printGreeting = () => {
 };
 
 const handleExit = () => {
-  stdin.on('data', (data) => {
+  stdin.on('data', async (data) => {
     const input = data.toString().trim();
 
     if (input === '.exit') {
@@ -37,7 +39,7 @@ const handleExit = () => {
       process.exit();
     } else if (input === 'ls') {
       listFiles(currentDir);
-    } else if (input.startsWith('cd')) {
+    } else if (input.split(' ')[0] === 'cd') {
       const pathToDirectory = input.split(' ')[1];
       let tempDir;
 
@@ -69,39 +71,14 @@ const handleExit = () => {
       }
       showCurrentDir();
       showPrompt();
-    } else if (input.startsWith('cat')) {
+    } else if (input.split(' ')[0] === 'cat') {
       readFile(input, currentDir);
-      // const name = input.split(' ')[1];
-      // const extension = name.split('.').pop();
-
-      // if (extension !== 'txt') {
-      //   console.log("Incorrect file format. Please select '.txt'.");
-      //   showCurrentDir();
-      //   showPrompt();
-      // } else {
-      //   const pathToFile = path.join(currentDir, name);
-
-      //   const readable = fs.createReadStream(pathToFile);
-
-      //   readable.on('readable', () => {
-      //     let chunk;
-
-      //     while (null !== (chunk = readable.read())) {
-      //       console.log(`${chunk}`);
-      //       console.log(`\nFile ${name} read successfully.`);
-      //       showCurrentDir();
-      //       showPrompt();
-      //     }
-      //   });
-
-      //   readable.on('error', (error) => {
-      //     console.error('Error occurred:', error.message);
-      //     showCurrentDir();
-      //     showPrompt();
-      //   });
-      // }
+    } else if (input.split(' ')[0] === 'add') {
+      await createFile(currentDir, input);
+    } else if (input.split(' ')[0] === 'rn') {
+      await renameFile(input);
     } else {
-      console.log('Unknown command.');
+      console.log('\nUnknown command.');
       showCurrentDir();
       showPrompt();
     }
