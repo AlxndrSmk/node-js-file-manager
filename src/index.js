@@ -9,6 +9,7 @@ import showPrompt from './showPrompt.js';
 import readFile from './readFile.js';
 import createFile from './createFile.js';
 import renameFile from './renameFile.js';
+import copyFile from './copyFile.js';
 
 const args = process.argv.slice(2);
 let username;
@@ -77,6 +78,10 @@ const handleExit = () => {
       await createFile(currentDir, input);
     } else if (input.split(' ')[0] === 'rn') {
       await renameFile(input);
+    } else if (input.split(' ')[0] === 'cp') {
+      await copyFile(input);
+    } else if (input.split(' ')[0] === 'mv') {
+      await copyFile(input);
     } else {
       console.log('\nUnknown command.');
       showCurrentDir();
