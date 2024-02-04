@@ -3,14 +3,11 @@ import { stdin } from 'node:process';
 import os from 'os';
 import path from 'path';
 import fs from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 
 import listFiles from './listFiles.js';
 import showPrompt from './showPrompt.js';
+import readFile from './readFile.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 const args = process.argv.slice(2);
 let username;
 const homeDir = os.homedir();
@@ -72,6 +69,37 @@ const handleExit = () => {
       }
       showCurrentDir();
       showPrompt();
+    } else if (input.startsWith('cat')) {
+      readFile(input, currentDir);
+      // const name = input.split(' ')[1];
+      // const extension = name.split('.').pop();
+
+      // if (extension !== 'txt') {
+      //   console.log("Incorrect file format. Please select '.txt'.");
+      //   showCurrentDir();
+      //   showPrompt();
+      // } else {
+      //   const pathToFile = path.join(currentDir, name);
+
+      //   const readable = fs.createReadStream(pathToFile);
+
+      //   readable.on('readable', () => {
+      //     let chunk;
+
+      //     while (null !== (chunk = readable.read())) {
+      //       console.log(`${chunk}`);
+      //       console.log(`\nFile ${name} read successfully.`);
+      //       showCurrentDir();
+      //       showPrompt();
+      //     }
+      //   });
+
+      //   readable.on('error', (error) => {
+      //     console.error('Error occurred:', error.message);
+      //     showCurrentDir();
+      //     showPrompt();
+      //   });
+      // }
     } else {
       console.log('Unknown command.');
       showCurrentDir();
