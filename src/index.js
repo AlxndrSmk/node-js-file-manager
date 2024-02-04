@@ -10,6 +10,7 @@ import readFile from './readFile.js';
 import createFile from './createFile.js';
 import renameFile from './renameFile.js';
 import copyFile from './copyFile.js';
+import deleteFile from './deleteFile.js';
 
 const args = process.argv.slice(2);
 let username;
@@ -82,6 +83,8 @@ const handleExit = () => {
       await copyFile(input);
     } else if (input.split(' ')[0] === 'mv') {
       await copyFile(input);
+    } else if (input.split(' ')[0] === 'rm') {
+      await deleteFile(input);
     } else {
       console.log('\nUnknown command.');
       showCurrentDir();
