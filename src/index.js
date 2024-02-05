@@ -22,7 +22,8 @@ let currentDir = homeDir;
 
 const showHomeDir = () => console.log(`You are currently in ${homeDir}`);
 export const showCurrentDir = () =>
-  console.log(`You are currently in ${currentDir}`);
+  console.log(`
+You are currently in ${currentDir}`);
 const printGoodbye = () =>
   console.log(`
 Thank you for using File Manager, ${username}, goodbye!`);
@@ -64,10 +65,9 @@ const handleExit = () => {
         }
       } catch {
         console.log(os.EOL + "Directory doesn't exist.");
+        showCurrentDir();
+        showPrompt();
       }
-
-      showCurrentDir();
-      showPrompt();
     } else if (input === 'up') {
       const parentDir = currentDir.split('/').slice(0, -1).join('/');
       currentDir = parentDir;

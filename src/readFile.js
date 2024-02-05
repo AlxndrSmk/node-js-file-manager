@@ -12,26 +12,32 @@ const readFile = (input, currentDir) => {
     showCurrentDir();
     showPrompt();
   } else {
-    const pathToFile = path.join(currentDir, name);
+    try {
+      const pathToFile = path.join(currentDir, name);
 
-    const readable = fs.createReadStream(pathToFile);
+      const readable = fs.createReadStream(pathToFile);
 
-    readable.on('readable', () => {
-      let chunk;
+      readable.on('readable', () => {
+        let chunk;
 
-      while (null !== (chunk = readable.read())) {
-        console.log(`${chunk}`);
-        console.log(os.EOL + 'File ' + name + ' read successfully.');
+        while (null !== (chunk = readable.read())) {
+          console.log(`${chunk}`);
+          console.log(os.EOL + 'File ' + name + ' read successfully.');
+          showCurrentDir();
+          showPrompt();
+        }
+      });
+
+      readable.on('error', (error) => {
+        console.error('Error occurred:', error.message);
         showCurrentDir();
         showPrompt();
-      }
-    });
-
-    readable.on('error', (error) => {
-      console.error('Error occurred:', error.message);
+      });
+    } catch (err) {
+      console.log(err);
       showCurrentDir();
       showPrompt();
-    });
+    }
   }
 };
 
