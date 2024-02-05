@@ -11,7 +11,6 @@ const operationSystem = (input) => {
       break;
 
     case '--cpus':
-      console.log(os.cpus());
       console.log(os.EOL + 'Overall CPUS amount: ' + os.cpus().length + '.');
       const info = os.cpus().map((cpu) => ({
         Model: cpu.model.split(' ')[0],

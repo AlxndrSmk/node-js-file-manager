@@ -9,6 +9,8 @@ const calcHash = async (input) => {
 
   if (!path?.startsWith('/')) {
     console.log(os.EOL + 'Please, enter absolute path to file.');
+    showCurrentDir();
+    showPrompt();
   } else {
     const fd = fs.createReadStream(path);
     const hash = crypto.createHash('sha1');
@@ -17,13 +19,12 @@ const calcHash = async (input) => {
     fd.on('end', () => {
       hash.end();
       console.log('Hash: ' + hash.read());
+      showCurrentDir();
+      showPrompt();
     });
 
     fd.pipe(hash);
   }
-
-  showCurrentDir();
-  showPrompt();
 };
 
 export default calcHash;
