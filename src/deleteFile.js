@@ -6,7 +6,7 @@ import { showCurrentDir } from './index.js';
 const deleteFile = async (input) => {
   const path = input.split(' ')[1];
 
-  if (!path.startsWith('/')) {
+  if (!path?.startsWith('/')) {
     console.log(os.EOL + 'Please, enter absolute path to file.');
     showCurrentDir();
     showPrompt();

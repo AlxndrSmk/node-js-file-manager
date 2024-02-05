@@ -13,6 +13,7 @@ import copyFile from './copyFile.js';
 import deleteFile from './deleteFile.js';
 import operationSystem from './operationSystem.js';
 import calcHash from './calcHash.js';
+import brotilCompress from './brotilCompress.js';
 
 const args = process.argv.slice(2);
 let username;
@@ -27,7 +28,7 @@ const printGoodbye = () =>
 Thank you for using File Manager, ${username}, goodbye!`);
 const printGreeting = () => {
   args.map((el) => {
-    if (el.startsWith('--')) {
+    if (el?.startsWith('--')) {
       username = el.split('=')[1];
       console.log(`Welcome to the File Manager, ${username}!`);
     }
@@ -47,7 +48,7 @@ const handleExit = () => {
       const pathToDirectory = input.split(' ')[1];
       let tempDir;
 
-      if (pathToDirectory.startsWith(homeDir)) {
+      if (pathToDirectory?.startsWith(homeDir)) {
         tempDir = pathToDirectory;
       } else {
         tempDir = path.join(currentDir, pathToDirectory);
@@ -62,7 +63,7 @@ const handleExit = () => {
           console.log('This is not a directory.');
         }
       } catch {
-        console.log("Directory doesn't exist.");
+        console.log(os.EOL + "Directory doesn't exist.");
       }
 
       showCurrentDir();
@@ -91,6 +92,11 @@ const handleExit = () => {
       operationSystem(input);
     } else if (input.split(' ')[0] === 'hash') {
       calcHash(input);
+    } else if (
+      input.split(' ')[0] === 'compress' ||
+      input.split(' ')[0] === 'decompress'
+    ) {
+      await brotilCompress(input);
     } else {
       console.log(os.EOL + 'Unknown command.');
       showCurrentDir();

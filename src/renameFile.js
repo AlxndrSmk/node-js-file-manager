@@ -13,7 +13,7 @@ const renameFile = async (input) => {
     fileName
   );
 
-  if (!oldPath.startsWith('/')) {
+  if (!oldPath?.startsWith('/')) {
     console.log(os.EOL + 'Please, enter absolute path to file.');
     showCurrentDir();
     showPrompt();

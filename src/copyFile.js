@@ -9,7 +9,7 @@ const copyFile = async (input) => {
   const oldPath = input.split(' ')[1];
   const newPath = input.split(' ')[2];
 
-  if (!oldPath.startsWith('/') || !newPath.startsWith('/')) {
+  if (!oldPath?.startsWith('/') || !newPath?.startsWith('/')) {
     console.log(os.EOL + 'Please, enter absolute path to file.');
     showCurrentDir();
     showPrompt();

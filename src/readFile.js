@@ -7,7 +7,7 @@ import showPrompt from './showPrompt.js';
 const readFile = (input, currentDir) => {
   const name = input.split(' ')[1];
 
-  if (name.startsWith('.')) {
+  if (name?.startsWith('.')) {
     console.log(os.EOL + "System files can't be read.");
     showCurrentDir();
     showPrompt();

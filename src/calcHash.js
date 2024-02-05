@@ -7,7 +7,7 @@ import crypto from 'crypto';
 const calcHash = async (input) => {
   const path = input.split(' ')[1];
 
-  if (!path.startsWith('/')) {
+  if (!path?.startsWith('/')) {
     console.log(os.EOL + 'Please, enter absolute path to file.');
   } else {
     const fd = fs.createReadStream(path);
