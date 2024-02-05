@@ -1,4 +1,5 @@
 import fs from 'fs';
+import os from 'os';
 import { access, constants, unlink } from 'node:fs';
 import showPrompt from './showPrompt.js';
 import { showCurrentDir } from './index.js';
@@ -9,7 +10,7 @@ const copyFile = async (input) => {
   const newPath = input.split(' ')[2];
 
   if (!oldPath.startsWith('/') || !newPath.startsWith('/')) {
-    console.log('\nPlease, enter absolute path to file.');
+    console.log(os.EOL + 'Please, enter absolute path to file.');
     showCurrentDir();
     showPrompt();
   } else {
@@ -45,7 +46,7 @@ File '${oldPath.split('/').pop()}' does not exists.`);
                   console.log('Error removing old file: ', err);
                 }
               });
-              console.log('\nFile moved successfully.');
+              console.log(os.EOL + 'File moved successfully.');
             } catch (err) {
               console.log('Error removing old file: ', err);
             } finally {
@@ -53,7 +54,7 @@ File '${oldPath.split('/').pop()}' does not exists.`);
               showPrompt();
             }
           } else {
-            console.log('\nFile copied successfully!');
+            console.log(os.EOL + 'File copied successfully!');
             showCurrentDir();
             showPrompt();
           }

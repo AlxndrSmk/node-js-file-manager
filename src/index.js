@@ -11,6 +11,7 @@ import createFile from './createFile.js';
 import renameFile from './renameFile.js';
 import copyFile from './copyFile.js';
 import deleteFile from './deleteFile.js';
+import operationSystem from './operationSystem.js';
 
 const args = process.argv.slice(2);
 let username;
@@ -85,8 +86,10 @@ const handleExit = () => {
       await copyFile(input);
     } else if (input.split(' ')[0] === 'rm') {
       await deleteFile(input);
+    } else if (input.split(' ')[0] === 'os') {
+      await operationSystem(input);
     } else {
-      console.log('\nUnknown command.');
+      console.log(os.EOL + 'Unknown command.');
       showCurrentDir();
       showPrompt();
     }

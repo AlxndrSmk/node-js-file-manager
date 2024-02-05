@@ -1,4 +1,5 @@
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import { showCurrentDir } from './index.js';
 import showPrompt from './showPrompt.js';
@@ -7,7 +8,7 @@ const readFile = (input, currentDir) => {
   const name = input.split(' ')[1];
 
   if (name.startsWith('.')) {
-    console.log("\nSystem files can't be read.");
+    console.log(os.EOL + "System files can't be read.");
     showCurrentDir();
     showPrompt();
   } else {
@@ -20,7 +21,7 @@ const readFile = (input, currentDir) => {
 
       while (null !== (chunk = readable.read())) {
         console.log(`${chunk}`);
-        console.log(`\nFile '${name}' read successfully.`);
+        console.log(os.EOL + 'File ' + name + ' read successfully.');
         showCurrentDir();
         showPrompt();
       }

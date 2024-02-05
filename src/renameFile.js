@@ -1,4 +1,5 @@
 import * as fsPromises from 'fs/promises';
+import os from 'os';
 import showPrompt from './showPrompt.js';
 import { showCurrentDir } from './index.js';
 import { access, constants } from 'node:fs';
@@ -13,7 +14,7 @@ const renameFile = async (input) => {
   );
 
   if (!oldPath.startsWith('/')) {
-    console.log('\nPlease, enter absolute path to file.');
+    console.log(os.EOL + 'Please, enter absolute path to file.');
     showCurrentDir();
     showPrompt();
   } else {
@@ -23,7 +24,7 @@ const renameFile = async (input) => {
             File '${oldPath.split('/').pop()}' does not exists.`);
       } else {
         await fsPromises.rename(oldPath, newPath);
-        console.log('\nFile renamed succesfully');
+        console.log(os.EOL + 'File renamed succesfully');
       }
       showCurrentDir();
       showPrompt();

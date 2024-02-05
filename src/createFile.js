@@ -1,4 +1,5 @@
 import fs from 'fs/promises';
+import os from 'os';
 import path from 'path';
 import showPrompt from './showPrompt.js';
 import { showCurrentDir } from './index.js';
@@ -21,7 +22,7 @@ File '${fileName}' created at ${currentDir}`);
       console.log(err);
     }
   } else {
-    console.log('\nInvalid file name entered');
+    console.log(os.EOL + 'Invalid file name entered');
     showCurrentDir();
     showPrompt();
   }
