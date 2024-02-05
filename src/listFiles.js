@@ -8,22 +8,24 @@ const listFiles = async (dirPath) => {
   try {
     const files = await fs.promises.readdir(dirPath);
     if (files.length) {
-      const sortedFiles = files.sort((a, b) => {
-        const aStats = fs.lstatSync(path.join(dirPath, a));
-        const bStats = fs.lstatSync(path.join(dirPath, b));
-        if (aStats.isDirectory() !== bStats.isDirectory()) {
-          return aStats.isDirectory() ? -1 : 1;
+      const sortedFiles = await Promise.all(
+        files.map(async (file) => {
+          const stats = await fs.promises.lstat(path.join(dirPath, file));
+          return {
+            name: file,
+            type: stats.isDirectory() ? 'directory' : 'file',
+          };
+        })
+      );
+
+      sortedFiles.sort((a, b) => {
+        if (a.type !== b.type) {
+          return a.type === 'directory' ? -1 : 1;
         }
-        return a.localeCompare(b);
+        return a.name.localeCompare(b.name);
       });
 
-      const tableData = sortedFiles.map((file) => ({
-        name: file,
-        type: fs.lstatSync(path.join(dirPath, file)).isDirectory()
-          ? 'directory'
-          : 'file',
-      }));
-      console.table(tableData, ['name', 'type']);
+      console.table(sortedFiles, ['name', 'type']);
     } else {
       console.log('Folder is empty.');
     }

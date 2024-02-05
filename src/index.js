@@ -56,12 +56,16 @@ const handleExit = () => {
       }
 
       try {
-        if (fs.statSync(tempDir).isDirectory()) {
+        const stats = await fs.promises.stat(tempDir);
+
+        if (stats.isDirectory()) {
           currentDir = tempDir;
           showCurrentDir();
           showPrompt();
         } else {
           console.log('This is not a directory.');
+          showCurrentDir();
+          showPrompt();
         }
       } catch {
         console.log(os.EOL + "Directory doesn't exist.");

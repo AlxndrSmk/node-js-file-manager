@@ -9,22 +9,16 @@ const content = '';
 const createFile = async (currentDir, input) => {
   const fileName = input.split(' ')[1];
 
-  if (fileName.includes('.')) {
-    try {
-      await fs.writeFile(path.join(currentDir, fileName), content, {
-        flag: 'wx',
-      });
-      console.log(`
+  try {
+    await fs.writeFile(path.join(currentDir, fileName), content, {
+      flag: 'wx',
+    });
+    console.log(`
 File '${fileName}' created at ${currentDir}`);
-      showCurrentDir();
-      showPrompt();
-    } catch (err) {
-      console.log(err);
-    }
-  } else {
-    console.log(os.EOL + 'Invalid file name entered');
     showCurrentDir();
     showPrompt();
+  } catch (err) {
+    console.log(err);
   }
 };
 
