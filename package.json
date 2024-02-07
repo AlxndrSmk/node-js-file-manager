@@ -1,0 +1,22 @@
+{
+  "name": "node-js-file-manager",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlxndrSmk/node-js-file-manager.git"
+  },
+  "keywords": [],
+  "author": "Alexander Samak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlxndrSmk/node-js-file-manager/issues"
+  },
+  "homepage": "https://github.com/AlreadyBored/node-nodejs-basics#readme"
+}
